@@ -1,0 +1,23 @@
+PODS:
+  - Backgroundable (0.1.2)
+  - BLLogger (0.1.1)
+  - Stringer (0.1.1)
+  - SwiftFileManager (0.1.0):
+    - Backgroundable (~> 0.1)
+    - BLLogger (~> 0.1)
+    - Stringer (~> 0.1)
+
+DEPENDENCIES:
+  - SwiftFileManager (from `../`)
+
+EXTERNAL SOURCES:
+  SwiftFileManager:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Backgroundable: a0eb75b3aa1537944a53d7463a12bc869c60f326
+  BLLogger: caf652b72f9aff961436c7606df05087314291cf
+  Stringer: 4351cc199f672170d90d90a9330347a9bbe352ef
+  SwiftFileManager: 169faa2f791597f866e02a084c7d124acde15c8c
+
+COCOAPODS: 0.38.2

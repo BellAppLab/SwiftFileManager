@@ -1,0 +1,1 @@
+STRINGER_OTHER_LDFLAGS = -framework "Foundation"

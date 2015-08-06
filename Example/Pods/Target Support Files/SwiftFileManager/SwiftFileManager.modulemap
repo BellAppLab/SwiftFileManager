@@ -1,0 +1,6 @@
+framework module SwiftFileManager {
+  umbrella header "SwiftFileManager-umbrella.h"
+
+  export *
+  module * { export * }
+}

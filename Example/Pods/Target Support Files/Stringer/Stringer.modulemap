@@ -1,0 +1,6 @@
+framework module Stringer {
+  umbrella header "Stringer-umbrella.h"
+
+  export *
+  module * { export * }
+}
