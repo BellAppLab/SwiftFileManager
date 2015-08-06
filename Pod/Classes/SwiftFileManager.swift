@@ -19,7 +19,7 @@ public enum FileType
             result = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).last as! NSURL
             break
         case .Database:
-            result = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask).last as! NSURL
+            result = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last as! NSURL
             break
         case .TempFile:
             result = NSURL.fileURLWithPath(NSTemporaryDirectory())!
@@ -77,27 +77,6 @@ public extension NSFileManager
 {
     typealias FileManagerBlock = (success: Bool, finalURL: NSURL?) -> Void
     
-    static func shouldExcludeFileTypeFromBackup(fileType: FileType) -> Bool
-    {
-        switch fileType
-        {
-        case .ThumbnailImage, .FullImage, .AudioFile, .VideoFile, .TempFile:
-            return true
-        case .Database:
-            return false
-        }
-    }
-    
-    static func excludeFileFromBackup(url: NSURL) -> Bool
-    {
-        var error: NSError?
-        var result = url.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: &error)
-        if !result && error != nil {
-            dLog("File error: \(error)")
-        }
-        return result
-    }
-    
     static func URLForFileType(type: FileType) -> NSURL?
     {
         return type.folder()
@@ -123,10 +102,7 @@ public extension NSFileManager
     
     static func save(data: NSData, withName name: NSString, type: FileType, andBlock block: FileManagerBlock)
     {
-        if data.length == 0 {
-            dLog("Data should not be empty")
-            return
-        }
+        assert(data.length > 0, "Data should not be empty")
         
         var bgTaskId = startBgTask()
         
@@ -154,10 +130,7 @@ public extension NSFileManager
     
     static func copyFile(fromURL url: NSURL, withType type: FileType, andBlock block: FileManagerBlock?)
     {
-        if url.scheme == nil {
-            dLog("Origin URL should not be empty")
-            return
-        }
+        assert(url.scheme != nil, "Origin URL should not be empty")
         
         var bgTaskId = startBgTask()
         
@@ -200,10 +173,7 @@ public extension NSFileManager
     
     static func deleteFile(atURL: NSURL, withBlock block: FileManagerBlock?)
     {
-        if atURL.scheme == nil {
-            dLog("URL should not be empty")
-            return
-        }
+        assert(atURL.scheme != nil, "URL should not be empty")
         
         var bgTaskId = startBgTask()
         
@@ -237,9 +207,9 @@ public extension NSFileManager
             self.deleteFile(url, withBlock: block)
         } else {
             if block != nil {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                toMainThread {
                     block!(success: false, finalURL: nil)
-                })
+                }
             }
         }
     }
@@ -247,5 +217,26 @@ public extension NSFileManager
     static func deleteTempFiles(block: FileManagerBlock?)
     {
         self.deleteAllFiles(.TempFile, andBlock: block)
+    }
+    
+    static func shouldExcludeFileTypeFromBackup(fileType: FileType) -> Bool
+    {
+        switch fileType
+        {
+        case .ThumbnailImage, .FullImage, .AudioFile, .VideoFile, .TempFile:
+            return true
+        case .Database:
+            return false
+        }
+    }
+    
+    static func excludeFileFromBackup(url: NSURL) -> Bool
+    {
+        var error: NSError?
+        var result = url.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: &error)
+        if !result && error != nil {
+            dLog("File error: \(error)")
+        }
+        return result
     }
 }
