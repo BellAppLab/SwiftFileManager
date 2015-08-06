@@ -77,97 +77,149 @@ public extension NSFileManager
 {
     typealias FileManagerBlock = (success: Bool, finalURL: NSURL?) -> Void
     
-    static func URLForFileType(type: FileType) -> NSURL?
+    static func URLForFile(type: FileType, withBlock block: FileManagerBlock)
     {
-        return type.folder()
+        let fileManager = NSFileManager.defaultManager()
+        fileManager.startBackgroundTask()
+        
+        toBackground {
+            if let result = type.folder() {
+                var uniqueId = NSUUID().UUIDString
+                let fileManager = NSFileManager.defaultManager()
+                
+                while fileManager.fileExistsAtPath(result.URLByAppendingPathComponent(uniqueId).path!)
+                {
+                    uniqueId = NSUUID().UUIDString
+                }
+                
+                toMainThread {
+                    block(success: true, finalURL: result.URLByAppendingPathComponent(uniqueId))
+                    fileManager.endBackgroundTask()
+                }
+                return
+            }
+            
+            toMainThread {
+                block(success: false, finalURL: nil)
+                fileManager.endBackgroundTask()
+            }
+        }
     }
     
-    static func URLForFileType(type: FileType, andFileName name: NSString) -> NSURL?
+    static func URLForFile(type: FileType, withName name: NSString, andBlock block: FileManagerBlock)
     {
         assert(name.length > 2, "Invalid file name")
         assert(name.rangeOfString(".").location != NSNotFound, "File name should contain file extension")
         
-        if var result = type.folder()?.URLByAppendingPathComponent((name as String).cleanForFileSystem()) {
+        let fileManager = NSFileManager.defaultManager()
+        fileManager.startBackgroundTask()
+        
+        toBackground {
+            NSFileManager.URLForFileRecursive(type, withName: name, andBlock: { (success, finalURL) -> Void in
+                toMainThread {
+                    block(success: success, finalURL: finalURL)
+                    fileManager.endBackgroundTask()
+                }
+            })
+        }
+    }
+    
+    private static func URLForFileRecursive(type: FileType, withName name: NSString, andBlock block: FileManagerBlock)
+    {
+        if let result = type.folder()?.URLByAppendingPathComponent((name as String).cleanForFileSystem()) {
             if !NSFileManager.defaultManager().fileExistsAtPath(result.path!) {
-                return result
+                block(success: true, finalURL: result)
+                return
             }
-            
-            var components = name.componentsSeparatedByString(".") as! [String]
-            components[0] = components[0] + "1"
-            return URLForFileType(type, andFileName: ".".join(components))
         }
         
-        return nil
+        var components = name.componentsSeparatedByString(".") as! [String]
+        components[0] = components[0] + "1"
+        NSFileManager.URLForFileRecursive(type, withName: name, andBlock: block)
+    }
+    
+    static func save(data: NSData, type: FileType, andBlock block: FileManagerBlock)
+    {
+        assert(data.length > 0, "Data should not be empty")
+        
+        NSFileManager.URLForFile(type, withBlock: { (success, finalURL) -> Void in
+            if !success {
+                block(success: false, finalURL: nil)
+            } else {
+                NSFileManager.save(data, toURL: finalURL!, withBlock: block)
+            }
+        })
     }
     
     static func save(data: NSData, withName name: NSString, type: FileType, andBlock block: FileManagerBlock)
     {
         assert(data.length > 0, "Data should not be empty")
         
-        var bgTaskId = startBgTask()
-        
-        toBackground {
-            var result = false
-            if var destinationURL = self.URLForFileType(type, andFileName: name)
-            {
-                var error: NSError?
-                result = data.writeToURL(destinationURL, options: .AtomicWrite, error: &error)
-                if !result && error != nil {
-                    dLog("File save error: \(error)")
-                }
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    block(success: result, finalURL: destinationURL)
-                })
+        NSFileManager.URLForFile(type, withName: name) { (success, finalURL) -> Void in
+            if !success {
+                block(success: false, finalURL: nil)
             } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    block(success: result, finalURL: nil)
-                })
+                NSFileManager.save(data, toURL: finalURL!, withBlock: block)
             }
-            
-            endBgTask(bgTaskId)
         }
     }
     
-    static func copyFile(fromURL url: NSURL, withType type: FileType, andBlock block: FileManagerBlock?)
+    private static func save(data: NSData, toURL: NSURL, withBlock: FileManagerBlock)
+    {
+        var fileManager = NSFileManager.defaultManager()
+        fileManager.startBackgroundTask()
+        
+        toBackground {
+            var error: NSError?
+            var result = data.writeToURL(toURL, options: .AtomicWrite, error: &error)
+            if !result && error != nil {
+                dLog("File save error: \(error)")
+            }
+            toMainThread {
+                withBlock(success: result, finalURL: toURL)
+                fileManager.endBackgroundTask()
+            }
+        }
+    }
+    
+    static func moveFile(fromURL url: NSURL, toDestinationWithType type: FileType, withBlock block: FileManagerBlock)
     {
         assert(url.scheme != nil, "Origin URL should not be empty")
         
-        var bgTaskId = startBgTask()
+        let fileManager = NSFileManager.defaultManager()
+        fileManager.startBackgroundTask()
         
-        var finalBlock: FileManagerBlock = { (success, finalURL) -> Void in
-            if block != nil {
-                toMainThread {
-                    block!(success: success, finalURL: finalURL)
-                }
+        var resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
+            toMainThread {
+                block(success: success, finalURL: finalURL)
+                fileManager.endBackgroundTask()
             }
-            endBgTask(bgTaskId)
         }
         
         toBackground {
-            if !NSFileManager.defaultManager().fileExistsAtPath(url.path!) {
-                finalBlock(success: false, finalURL: nil)
+            if !fileManager.fileExistsAtPath(url.path!) {
+                resultBlock(success: false, finalURL: nil)
                 return
             }
             
             var error: NSError?
-            var data = NSData(contentsOfURL: url, options: .DataReadingUncached, error: &error)
-            if data == nil {
+            if var data = NSData(contentsOfURL: url, options: .DataReadingUncached, error: &error)
+            {
+                NSFileManager.save(data, withName: url.lastPathComponent!, type: type, andBlock: { (success, finalURL) -> Void in
+                    if !success {
+                        resultBlock(success: false, finalURL: nil)
+                    } else {
+                        NSFileManager.deleteFile(url, withBlock: resultBlock)
+                    }
+                })
+            }
+            else
+            {
                 if error != nil {
                     dLog("File copy error: \(error)")
                 }
-                finalBlock(success: false, finalURL: nil)
-                return
+                resultBlock(success: false, finalURL: nil)
             }
-            
-            NSFileManager.save(data!, withName: url.lastPathComponent!, type: type, andBlock: { (success, finalURL) -> Void in
-                if !success {
-                    finalBlock(success: false, finalURL: nil)
-                } else {
-                    NSFileManager.deleteFile(url, withBlock: { (success, tempURL) -> Void in
-                        finalBlock(success: success, finalURL: finalURL)
-                    })
-                }
-            })
         }
     }
     
@@ -175,20 +227,21 @@ public extension NSFileManager
     {
         assert(atURL.scheme != nil, "URL should not be empty")
         
-        var bgTaskId = startBgTask()
+        let fileManager = NSFileManager.defaultManager()
+        fileManager.startBackgroundTask()
         
-        var finalBlock: FileManagerBlock = { (success, finalURL) -> Void in
-            if block != nil {
+        let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
+            if var finalBlock = block {
                 toMainThread {
-                    block!(success: success, finalURL: finalURL)
+                    finalBlock(success: success, finalURL: finalURL)
                 }
             }
-            endBgTask(bgTaskId)
+            fileManager.endBackgroundTask()
         }
         
         toBackground {
             if !NSFileManager.defaultManager().fileExistsAtPath(atURL.path!) {
-                finalBlock(success: false, finalURL: nil)
+                resultBlock(success: false, finalURL: nil)
                 return
             }
             
@@ -197,7 +250,7 @@ public extension NSFileManager
             if !result && error != nil {
                 dLog("File deletion error: \(error)")
             }
-            finalBlock(success: result, finalURL: nil)
+            resultBlock(success: result, finalURL: nil)
         }
     }
     
