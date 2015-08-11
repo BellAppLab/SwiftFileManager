@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "SwiftFileManager"
-  s.version          = "0.2.0"
+  s.version          = "0.2.1"
   s.summary          = "A handy Swift extension that makes life easier when dealing with files on iOS / Mac OS X."
   s.homepage         = "https://github.com/BellAppLab/SwiftFileManager"
   s.license          = 'MIT'

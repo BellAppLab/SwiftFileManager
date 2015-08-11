@@ -7,7 +7,7 @@ import Stringer
 public enum FileType
 {
     case ThumbnailImage, FullImage, AudioFile, VideoFile, Database, TempFile
-    func folder() -> NSURL?
+    public func folder() -> NSURL?
     {
         var bgTaskId = startBgTask()
         
@@ -27,7 +27,7 @@ public enum FileType
         }
         
         //Custom URL
-        result = result.URLByAppendingPathComponent("Filer")
+        result = result.URLByAppendingPathComponent("SwiftFileManager")
         switch self
         {
         case .ThumbnailImage:
@@ -272,7 +272,7 @@ public extension NSFileManager
         self.deleteAllFiles(.TempFile, andBlock: block)
     }
     
-    static func shouldExcludeFileTypeFromBackup(fileType: FileType) -> Bool
+    private static func shouldExcludeFileTypeFromBackup(fileType: FileType) -> Bool
     {
         switch fileType
         {
