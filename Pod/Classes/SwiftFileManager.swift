@@ -9,20 +9,20 @@ public enum FileType
     case ThumbnailImage, FullImage, AudioFile, VideoFile, Database, TempFile
     public func folder() -> NSURL?
     {
-        var bgTaskId = startBgTask()
+        let bgTaskId = startBgTask()
         
         //Base URL
         var result: NSURL
         switch self
         {
         case .ThumbnailImage, .FullImage, .AudioFile, .VideoFile:
-            result = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).last as! NSURL
+            result = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).last!
             break
         case .Database:
-            result = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last as! NSURL
+            result = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
             break
         case .TempFile:
-            result = NSURL.fileURLWithPath(NSTemporaryDirectory())!
+            result = NSURL.fileURLWithPath(NSTemporaryDirectory())
             break
         }
         
@@ -52,12 +52,10 @@ public enum FileType
         //Creating folder if needed
         if !NSFileManager.defaultManager().fileExistsAtPath(result.path!)
         {
-            var error: NSError?
-            if !NSFileManager.defaultManager().createDirectoryAtURL(result, withIntermediateDirectories: true, attributes: nil, error: &error)
-            {
-                if var finalError = error {
-                    dLog("File error: \(error)")
-                }
+            do {
+                try NSFileManager.defaultManager().createDirectoryAtURL(result, withIntermediateDirectories: true, attributes: nil)
+            } catch let error as NSError {
+                dLog("File error: \(error)")
                 return nil
             }
             
@@ -133,7 +131,7 @@ public extension NSFileManager
             }
         }
         
-        var components = name.componentsSeparatedByString(".") as! [String]
+        var components = name.componentsSeparatedByString(".") 
         components[0] = components[0] + "1"
         NSFileManager.URLForFileRecursive(type, withName: name, andBlock: block)
     }
@@ -166,17 +164,20 @@ public extension NSFileManager
     
     private static func save(data: NSData, toURL: NSURL, withBlock: FileManagerBlock)
     {
-        var fileManager = NSFileManager.defaultManager()
+        let fileManager = NSFileManager.defaultManager()
         fileManager.startBackgroundTask()
         
         toBackground {
-            var error: NSError?
-            var result = data.writeToURL(toURL, options: .AtomicWrite, error: &error)
-            if !result && error != nil {
+            var success = true
+            do {
+                try data.writeToURL(toURL, options: .DataWritingAtomic)
+            } catch let error as NSError {
+                success = false
                 dLog("File save error: \(error)")
             }
+            
             toMainThread {
-                withBlock(success: result, finalURL: toURL)
+                withBlock(success: success, finalURL: toURL)
                 fileManager.endBackgroundTask()
             }
         }
@@ -184,12 +185,10 @@ public extension NSFileManager
     
     static func moveFile(fromURL url: NSURL, toDestinationWithType type: FileType, withBlock block: FileManagerBlock)
     {
-        assert(url.scheme != nil, "Origin URL should not be empty")
-        
         let fileManager = NSFileManager.defaultManager()
         fileManager.startBackgroundTask()
         
-        var resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
+        let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
             toMainThread {
                 block(success: success, finalURL: finalURL)
                 fileManager.endBackgroundTask()
@@ -202,10 +201,16 @@ public extension NSFileManager
                 return
             }
             
-            var error: NSError?
-            if var data = NSData(contentsOfURL: url, options: .DataReadingUncached, error: &error)
+            var data: NSData?
+            
+            do {
+                data = try NSData(contentsOfURL: url, options: .DataReadingUncached)
+            } catch let error as NSError {
+                dLog("File copy error: \(error)")
+            }
+            if data != nil
             {
-                NSFileManager.save(data, withName: url.lastPathComponent!, type: type, andBlock: { (success, finalURL) -> Void in
+                NSFileManager.save(data!, withName: url.lastPathComponent!, type: type, andBlock: { (success, finalURL) -> Void in
                     if !success {
                         resultBlock(success: false, finalURL: nil)
                     } else {
@@ -215,9 +220,6 @@ public extension NSFileManager
             }
             else
             {
-                if error != nil {
-                    dLog("File copy error: \(error)")
-                }
                 resultBlock(success: false, finalURL: nil)
             }
         }
@@ -225,13 +227,11 @@ public extension NSFileManager
     
     static func deleteFile(atURL: NSURL, withBlock block: FileManagerBlock?)
     {
-        assert(atURL.scheme != nil, "URL should not be empty")
-        
         let fileManager = NSFileManager.defaultManager()
         fileManager.startBackgroundTask()
         
         let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
-            if var finalBlock = block {
+            if let finalBlock = block {
                 toMainThread {
                     finalBlock(success: success, finalURL: finalURL)
                 }
@@ -245,18 +245,22 @@ public extension NSFileManager
                 return
             }
             
-            var error: NSError?
-            var result = NSFileManager.defaultManager().removeItemAtURL(atURL, error: &error)
-            if !result && error != nil {
+            var result = true
+            
+            do {
+                try NSFileManager.defaultManager().removeItemAtURL(atURL)
+            } catch let error as NSError {
+                result = false
                 dLog("File deletion error: \(error)")
             }
+            
             resultBlock(success: result, finalURL: nil)
         }
     }
     
     static func deleteAllFiles(type: FileType, andBlock block: FileManagerBlock?)
     {
-        if var url = type.folder() {
+        if let url = type.folder() {
             self.deleteFile(url, withBlock: block)
         } else {
             if block != nil {
@@ -286,7 +290,14 @@ public extension NSFileManager
     static func excludeFileFromBackup(url: NSURL) -> Bool
     {
         var error: NSError?
-        var result = url.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey, error: &error)
+        var result: Bool
+        do {
+            try url.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)
+            result = true
+        } catch let error1 as NSError {
+            error = error1
+            result = false
+        }
         if !result && error != nil {
             dLog("File error: \(error)")
         }

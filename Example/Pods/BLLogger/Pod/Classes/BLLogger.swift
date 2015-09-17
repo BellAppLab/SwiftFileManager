@@ -7,5 +7,5 @@ public func dLog(@autoclosure message:  () -> String, filename: String = __FILE_
     #endif
 }
 public func aLog(message: String, filename: String = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
-    NSLog("[\(filename.lastPathComponent):\(line)] \(function) - %@", message)
+    NSLog("[\(NSURL(string: filename)?.lastPathComponent):\(line)] \(function) - %@", message)
 }

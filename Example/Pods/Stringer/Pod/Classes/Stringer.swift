@@ -1,40 +1,41 @@
 import Foundation
 
 
+//MARK: - String manipulation
 public extension String
 {
     //MARK: Cleaning Text
     func cleanWhiteSpacesAndNewLineCharacters() -> String {
         if !self.isEmpty {
-            return "".join(self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).joinWithSeparator("")
         }
         return self
     }
     
     func cleanLetters() -> String {
         if !self.isEmpty {
-            return "".join(self.componentsSeparatedByCharactersInSet(NSCharacterSet.letterCharacterSet()))
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.letterCharacterSet()).joinWithSeparator("")
         }
         return self
     }
     
     func cleanPunctuation() -> String {
         if !self.isEmpty {
-            return "".join(self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuationCharacterSet()))
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuationCharacterSet()).joinWithSeparator("")
         }
         return self
     }
     
     func cleanSymbols() -> String {
         if !self.isEmpty {
-            return "".join(self.componentsSeparatedByCharactersInSet(NSCharacterSet.symbolCharacterSet()))
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.symbolCharacterSet()).joinWithSeparator("")
         }
         return self
     }
     
     func cleanNumbers() -> String {
         if !self.isEmpty {
-            return "".join(self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()))
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).joinWithSeparator("")
         }
         return self
     }
@@ -43,8 +44,8 @@ public extension String
         if !self.isEmpty {
             var result = self.cleanWhiteSpacesAndNewLineCharacters().cleanSymbols()
             if (result as NSString).rangeOfString(".").location != NSNotFound {
-                var components = NSMutableArray(array: result.componentsSeparatedByString("."))
-                var type = components.lastObject as! String
+                let components = NSMutableArray(array: result.componentsSeparatedByString("."))
+                let type = components.lastObject as! String
                 components.removeLastObject()
                 result = components.componentsJoinedByString("")
                 result = result.cleanPunctuation()
@@ -68,7 +69,7 @@ public extension String
     }
     
     var isNumber: Bool {
-        var string = "".join(self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuationCharacterSet()))
+        let string = self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuationCharacterSet()).joinWithSeparator("")
         if !string.isEmpty {
             return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).count == 0)
         }
@@ -130,7 +131,7 @@ extension String: Validatable
     
     public func isValid(type: ValidationType) -> Bool
     {
-        var cleanSelf = self.clean(type)
+        let cleanSelf = self.clean(type)
         if cleanSelf.isEmpty {
             return false
         }
@@ -142,7 +143,7 @@ extension String: Validatable
         case .Email:
             return NSPredicate(format: "SELF MATCHES %@","[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").evaluateWithObject(cleanSelf)
         case .Password:
-            return !"".join(cleanSelf.componentsSeparatedByCharactersInSet(NSCharacterSet.URLPasswordAllowedCharacterSet())).isEmpty
+            return !cleanSelf.componentsSeparatedByCharactersInSet(NSCharacterSet.URLPasswordAllowedCharacterSet()).joinWithSeparator("").isEmpty
         case .PhoneNumber, .PostalCode, .State:
             return localizedValidation(type, cleanString: cleanSelf)
         }
@@ -150,19 +151,81 @@ extension String: Validatable
     
     private func localizedValidation(type: ValidationType, cleanString: String) -> Bool
     {
-        if localeComponents[NSLocaleCountryCode] as! String == "BR" {
+        if localeComponents[NSLocaleCountryCode] == "BR" {
             switch type
             {
             case .PhoneNumber:
-                return count(cleanString) >= 10 && count(cleanString) <= 12
+                return cleanString.characters.count >= 10 && cleanString.characters.count <= 12
             case .PostalCode:
-                return count(cleanString) == 8
+                return cleanString.characters.count == 8
             case .State:
-                return count(cleanString) == 2
+                return cleanString.characters.count == 2
             default:
                 return true
             }
         }
         return true
+    }
+}
+
+
+//MARK: - Custom Font UI Kit
+
+public protocol CustomFont
+{
+    var fontName: String { get set }
+}
+
+extension UILabel: CustomFont
+{
+    @IBInspectable public var fontName: String {
+        get {
+            return self.font.fontName
+        }
+        set {
+            self.font = UIFont(name: newValue, size: self.font.pointSize)
+        }
+    }
+}
+
+extension UIButton: CustomFont
+{
+    @IBInspectable public var fontName: String {
+        get {
+            if let result = self.titleLabel?.fontName {
+                return result
+            }
+            return ""
+        }
+        set {
+            if let label = self.titleLabel {
+                label.font = UIFont(name: newValue, size: label.font.pointSize)
+            }
+        }
+    }
+}
+
+extension UITextField: CustomFont
+{
+    @IBInspectable public var fontName: String {
+        get {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: "", object: nil)
+            return self.font!.fontName
+        }
+        set {
+            self.font = UIFont(name: newValue, size: self.font!.pointSize)
+        }
+    }
+}
+
+extension UITextView: CustomFont
+{
+    @IBInspectable public var fontName: String {
+        get {
+            return self.font!.fontName
+        }
+        set {
+            self.font = UIFont(name: newValue, size: self.font!.pointSize)
+        }
     }
 }
