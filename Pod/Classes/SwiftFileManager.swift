@@ -77,8 +77,7 @@ public extension NSFileManager
     
     static func URLForFile(type: FileType, withBlock block: FileManagerBlock)
     {
-        let fileManager = NSFileManager.defaultManager()
-        fileManager.startBackgroundTask()
+        let bgTaskId = startBackgroundTask()
         
         toBackground {
             if let result = type.folder() {
@@ -92,14 +91,14 @@ public extension NSFileManager
                 
                 toMainThread {
                     block(success: true, finalURL: result.URLByAppendingPathComponent(uniqueId))
-                    fileManager.endBackgroundTask()
+                    endBackgroundTask(bgTaskId)
                 }
                 return
             }
             
             toMainThread {
                 block(success: false, finalURL: nil)
-                fileManager.endBackgroundTask()
+                endBackgroundTask(bgTaskId)
             }
         }
     }
@@ -109,14 +108,13 @@ public extension NSFileManager
         assert(name.length > 2, "Invalid file name")
         assert(name.rangeOfString(".").location != NSNotFound, "File name should contain file extension")
         
-        let fileManager = NSFileManager.defaultManager()
-        fileManager.startBackgroundTask()
+        let bgTaskId = startBackgroundTask()
         
         toBackground {
             NSFileManager.URLForFileRecursive(type, withName: name, andBlock: { (success, finalURL) -> Void in
                 toMainThread {
                     block(success: success, finalURL: finalURL)
-                    fileManager.endBackgroundTask()
+                    endBackgroundTask(bgTaskId)
                 }
             })
         }
@@ -164,8 +162,7 @@ public extension NSFileManager
     
     private static func save(data: NSData, toURL: NSURL, withBlock: FileManagerBlock)
     {
-        let fileManager = NSFileManager.defaultManager()
-        fileManager.startBackgroundTask()
+        let bgTaskId = startBackgroundTask()
         
         toBackground {
             var success = true
@@ -178,7 +175,7 @@ public extension NSFileManager
             
             toMainThread {
                 withBlock(success: success, finalURL: toURL)
-                fileManager.endBackgroundTask()
+                endBackgroundTask(bgTaskId)
             }
         }
     }
@@ -186,12 +183,12 @@ public extension NSFileManager
     static func moveFile(fromURL url: NSURL, toDestinationWithType type: FileType, withBlock block: FileManagerBlock)
     {
         let fileManager = NSFileManager.defaultManager()
-        fileManager.startBackgroundTask()
+        let bgTaskId = startBackgroundTask()
         
         let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
             toMainThread {
                 block(success: success, finalURL: finalURL)
-                fileManager.endBackgroundTask()
+                endBackgroundTask(bgTaskId)
             }
         }
         
@@ -228,7 +225,7 @@ public extension NSFileManager
     static func deleteFile(atURL: NSURL, withBlock block: FileManagerBlock?)
     {
         let fileManager = NSFileManager.defaultManager()
-        fileManager.startBackgroundTask()
+        let bgTaskId = startBackgroundTask()
         
         let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
             if let finalBlock = block {
@@ -236,11 +233,11 @@ public extension NSFileManager
                     finalBlock(success: success, finalURL: finalURL)
                 }
             }
-            fileManager.endBackgroundTask()
+            endBackgroundTask(bgTaskId)
         }
         
         toBackground {
-            if !NSFileManager.defaultManager().fileExistsAtPath(atURL.path!) {
+            if !fileManager.fileExistsAtPath(atURL.path!) {
                 resultBlock(success: false, finalURL: nil)
                 return
             }
@@ -248,7 +245,7 @@ public extension NSFileManager
             var result = true
             
             do {
-                try NSFileManager.defaultManager().removeItemAtURL(atURL)
+                try fileManager.removeItemAtURL(atURL)
             } catch let error as NSError {
                 result = false
                 dLog("File deletion error: \(error)")
