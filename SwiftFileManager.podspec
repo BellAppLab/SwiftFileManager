@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "SwiftFileManager"
-  s.version          = "0.3.1"
+  s.version          = "0.3.2"
   s.summary          = "A handy Swift extension that makes life easier when dealing with files on iOS / Mac OS X."
   s.homepage         = "https://github.com/BellAppLab/SwiftFileManager"
   s.license          = 'MIT'
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Pod/Classes/**/*'
 
   s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'Backgroundable', '~> 0.1'
-  s.dependency 'BLLogger', '~> 0.1'
-  s.dependency 'Stringer', '~> 0.1'
+  s.dependency 'Backgroundable'
+  s.dependency 'BLLogger'
+  s.dependency 'Stringer'
 end

@@ -13,8 +13,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		93181A80573C83C1EF2E3E4C /* Pods_SwiftFileManager_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ADAD67500851AEBC23D5092 /* Pods_SwiftFileManager_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		BDEC5888C5A229186D80AEBB /* Pods_SwiftFileManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C418F45CD694C8E06D79B3 /* Pods_SwiftFileManager_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		93181A80573C83C1EF2E3E4C /* Pods_SwiftFileManager_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ADAD67500851AEBC23D5092 /* Pods_SwiftFileManager_Example.framework */; };
+		BDEC5888C5A229186D80AEBB /* Pods_SwiftFileManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C418F45CD694C8E06D79B3 /* Pods_SwiftFileManager_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */

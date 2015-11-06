@@ -9,7 +9,7 @@ public enum FileType
     case ThumbnailImage, FullImage, AudioFile, VideoFile, Database, TempFile
     public func folder() -> NSURL?
     {
-        let bgTaskId = startBgTask()
+        startBackgroundTask()
         
         //Base URL
         var result: NSURL
@@ -65,7 +65,7 @@ public enum FileType
             }
         }
         
-        endBgTask(bgTaskId)
+        endBackgroundTask()
         
         return result
     }
@@ -77,7 +77,7 @@ public extension NSFileManager
     
     static func URLForFile(type: FileType, withBlock block: FileManagerBlock)
     {
-        let bgTaskId = startBackgroundTask()
+        startBackgroundTask()
         
         toBackground {
             if let result = type.folder() {
@@ -91,14 +91,14 @@ public extension NSFileManager
                 
                 toMainThread {
                     block(success: true, finalURL: result.URLByAppendingPathComponent(uniqueId))
-                    endBackgroundTask(bgTaskId)
+                    endBackgroundTask()
                 }
                 return
             }
             
             toMainThread {
                 block(success: false, finalURL: nil)
-                endBackgroundTask(bgTaskId)
+                endBackgroundTask()
             }
         }
     }
@@ -108,13 +108,13 @@ public extension NSFileManager
         assert(name.length > 2, "Invalid file name")
         assert(name.rangeOfString(".").location != NSNotFound, "File name should contain file extension")
         
-        let bgTaskId = startBackgroundTask()
+        startBackgroundTask()
         
         toBackground {
             NSFileManager.URLForFileRecursive(type, withName: name, andBlock: { (success, finalURL) -> Void in
                 toMainThread {
                     block(success: success, finalURL: finalURL)
-                    endBackgroundTask(bgTaskId)
+                    endBackgroundTask()
                 }
             })
         }
@@ -162,7 +162,7 @@ public extension NSFileManager
     
     private static func save(data: NSData, toURL: NSURL, withBlock: FileManagerBlock)
     {
-        let bgTaskId = startBackgroundTask()
+        startBackgroundTask()
         
         toBackground {
             var success = true
@@ -175,7 +175,7 @@ public extension NSFileManager
             
             toMainThread {
                 withBlock(success: success, finalURL: toURL)
-                endBackgroundTask(bgTaskId)
+                endBackgroundTask()
             }
         }
     }
@@ -183,12 +183,12 @@ public extension NSFileManager
     static func moveFile(fromURL url: NSURL, toDestinationWithType type: FileType, withBlock block: FileManagerBlock)
     {
         let fileManager = NSFileManager.defaultManager()
-        let bgTaskId = startBackgroundTask()
+        startBackgroundTask()
         
         let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
             toMainThread {
                 block(success: success, finalURL: finalURL)
-                endBackgroundTask(bgTaskId)
+                endBackgroundTask()
             }
         }
         
@@ -225,7 +225,7 @@ public extension NSFileManager
     static func deleteFile(atURL: NSURL, withBlock block: FileManagerBlock?)
     {
         let fileManager = NSFileManager.defaultManager()
-        let bgTaskId = startBackgroundTask()
+        startBackgroundTask()
         
         let resultBlock: FileManagerBlock = { (success, finalURL) -> Void in
             if let finalBlock = block {
@@ -233,7 +233,7 @@ public extension NSFileManager
                     finalBlock(success: success, finalURL: finalURL)
                 }
             }
-            endBackgroundTask(bgTaskId)
+            endBackgroundTask()
         }
         
         toBackground {

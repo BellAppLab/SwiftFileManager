@@ -22,13 +22,13 @@
   ],
   "dependencies": {
     "Backgroundable": [
-      "~> 0.1"
+
     ],
     "BLLogger": [
-      "~> 0.1"
+
     ],
     "Stringer": [
-      "~> 0.1"
+
     ]
   }
 }
