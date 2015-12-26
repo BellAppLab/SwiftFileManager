@@ -1,55 +1,73 @@
 import UIKit
 
+//MARK: - Internals
+private extension NSCharacterSet
+{
+    @nonobjc private static let whitespaceAndNewline = NSCharacterSet.whitespaceAndNewlineCharacterSet()
+    @nonobjc private static let whitespace = NSCharacterSet.whitespaceCharacterSet()
+    @nonobjc private static let newline = NSCharacterSet.newlineCharacterSet()
+    @nonobjc private static let letter = NSCharacterSet.letterCharacterSet()
+    @nonobjc private static let punctuation = NSCharacterSet.punctuationCharacterSet()
+    @nonobjc private static let symbol = NSCharacterSet.symbolCharacterSet()
+    @nonobjc private static let decimalDigit = NSCharacterSet.decimalDigitCharacterSet()
+}
 
 //MARK: - String manipulation
 public extension String
 {
+    //MARK: Consts
+    public static let dot = "."
+    public static let space = " "
+    public static let comma = ","
+    public static let semicolon = ";"
+    public static let colon = ":"
+    public static let empty = ""
+    
     //MARK: Cleaning Text
     func cleanWhiteSpacesAndNewLineCharacters() -> String {
         if !self.isEmpty {
-            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).joinWithSeparator("")
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewline).joinWithSeparator(String.empty)
         }
         return self
     }
     
     func cleanLetters() -> String {
         if !self.isEmpty {
-            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.letterCharacterSet()).joinWithSeparator("")
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.letter).joinWithSeparator(String.empty)
         }
         return self
     }
     
     func cleanPunctuation() -> String {
         if !self.isEmpty {
-            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuationCharacterSet()).joinWithSeparator("")
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuation).joinWithSeparator(String.empty)
         }
         return self
     }
     
     func cleanSymbols() -> String {
         if !self.isEmpty {
-            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.symbolCharacterSet()).joinWithSeparator("")
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.symbol).joinWithSeparator(String.empty)
         }
         return self
     }
     
     func cleanNumbers() -> String {
         if !self.isEmpty {
-            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).joinWithSeparator("")
+            return self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigit).joinWithSeparator(String.empty)
         }
         return self
     }
     
     func cleanForFileSystem() -> String {
         if !self.isEmpty {
-            var result = self.cleanWhiteSpacesAndNewLineCharacters().cleanSymbols()
-            if (result as NSString).rangeOfString(".").location != NSNotFound {
-                let components = NSMutableArray(array: result.componentsSeparatedByString("."))
-                let type = components.lastObject as! String
-                components.removeLastObject()
-                result = components.componentsJoinedByString("")
-                result = result.cleanPunctuation()
-                return NSString(format: "%@.%@", result, type.cleanPunctuation()) as String
+            var result = self.cleanWhiteSpacesAndNewLineCharacters()
+            if let _ = result.rangeOfString(String.dot) {
+                var components = result.componentsSeparatedByString(String.dot)
+                let type = components.removeLast()
+                result = components.joinWithSeparator(String.empty)
+                result = result.cleanSymbols().cleanPunctuation()
+                return "\(result)\(String.dot)\(type)"
             }
         }
         return self
@@ -57,7 +75,7 @@ public extension String
     
     func trim() -> String {
         if !self.isEmpty {
-            return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewline)
         }
         return self
     }
@@ -65,23 +83,23 @@ public extension String
     
     //MARK: General Checks
     var isLetter: Bool {
-        return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.letterCharacterSet()).count == 0)
+        return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.letter).count == 0)
     }
     
     var isNumber: Bool {
-        let string = self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuationCharacterSet()).joinWithSeparator("")
+        let string = self.componentsSeparatedByCharactersInSet(NSCharacterSet.punctuation).joinWithSeparator(String.empty)
         if !string.isEmpty {
-            return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).count == 0)
+            return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigit).count == 0)
         }
         return false
     }
     
     var isSpaceCharacter: Bool {
-        return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).count == 0)
+        return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespace).count == 0)
     }
     
     var isNewLineCharacter: Bool {
-        return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet()).count == 0)
+        return (self.componentsSeparatedByCharactersInSet(NSCharacterSet.newline).count == 0)
     }
 }
 
@@ -95,6 +113,7 @@ private let localeComponents = NSLocale.componentsFromLocaleIdentifier(NSLocale.
 
 public enum ValidationType
 {
+    case File
     case Name
     case Email
     case Password
@@ -126,6 +145,8 @@ extension String: Validatable
             return self.cleanPunctuation().cleanSymbols()
         case .State:
             return self.cleanWhiteSpacesAndNewLineCharacters().cleanPunctuation().cleanSymbols().cleanNumbers().uppercaseString
+        case .File:
+            return self.cleanForFileSystem()
         }
     }
     
@@ -146,6 +167,8 @@ extension String: Validatable
             return !cleanSelf.componentsSeparatedByCharactersInSet(NSCharacterSet.URLPasswordAllowedCharacterSet()).joinWithSeparator("").isEmpty
         case .PhoneNumber, .PostalCode, .State:
             return localizedValidation(type, cleanString: cleanSelf)
+        case .File:
+            return self == self.cleanForFileSystem()
         }
     }
     
@@ -209,7 +232,6 @@ extension UITextField: CustomFont
 {
     @IBInspectable public var fontName: String {
         get {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: "", object: nil)
             return self.font!.fontName
         }
         set {

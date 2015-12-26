@@ -1,6 +1,6 @@
 {
   "name": "SwiftFileManager",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "summary": "A handy Swift extension that makes life easier when dealing with files on iOS / Mac OS X.",
   "homepage": "https://github.com/BellAppLab/SwiftFileManager",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/BellAppLab/SwiftFileManager.git",
-    "tag": "0.3.1"
+    "tag": "0.4.0"
   },
   "platforms": {
     "ios": "8.0"

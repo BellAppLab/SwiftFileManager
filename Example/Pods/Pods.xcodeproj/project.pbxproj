@@ -8,27 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		0AC7376D019A266859F95CD342305519 /* Pods-SwiftFileManager_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F8E86CBDB487C3A78216D2C88B353182 /* Pods-SwiftFileManager_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		15FEC3FD3EB25D16B4C53AF85B7C15C8 /* Backgroundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3AE22C45269BB2A4B40B6B46D0A688 /* Backgroundable.swift */; };
 		170C19EB94B83072EA7F5540A464D784 /* SwiftFileManager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 46983CA49D2BE4057C9EF7237B0D0D68 /* SwiftFileManager-dummy.m */; };
 		20056CCC5C9F72EB834A945DBA1C27D1 /* Stringer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598D2F36FFD18393E0CB71F77849EA2E /* Stringer.swift */; };
 		293468E4B24353438C2B6737CC22F17B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4279CC4F229A91EE3FF0BEFD3FDE1A /* UIKit.framework */; };
 		357D591D3DEE36B044D38A68F85C9A8B /* SwiftFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5B1E0D95A3A27A937CB5451D407C9 /* SwiftFileManager.swift */; };
 		35C49C618331F28DB381F31A96DDFF8A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469E4517F97077F0AD2FAF35392F5FA7 /* Foundation.framework */; };
 		452D38B0EB3530E0FC444C73FAABB03D /* Backgroundable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 153EA474E8A484EB0F96156C94F0CDA0 /* Backgroundable.framework */; };
+		456DE8B09BA369B356D0249CFDB1B6C7 /* Backgroundable-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5A6340D212F270EE6DEE7BF066084F /* Backgroundable-dummy.m */; };
 		54378324695556BFC5A00117D9D6CCDD /* BLLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D657284988BC39B3766E1664BA99A81 /* BLLogger.framework */; };
 		6AB5BD05EE3FCE8CF32B96CAD8BE3F8C /* Pods-SwiftFileManager_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5949C670E2BEA1B0C99F4336A0C1411E /* Pods-SwiftFileManager_Tests-dummy.m */; };
-		6CE49A504728769A44E416D23AD6E56D /* Backgroundable-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9928F7A70A45E5E42221CCADD9B66103 /* Backgroundable-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6CE49A504728769A44E416D23AD6E56D /* Backgroundable-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 172EAEB72924DE907C0612AE55149CF8 /* Backgroundable-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F037528B5E772C722FEA6891C62B002 /* BLLogger-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 029855B41CDE5B13A1C201837B999284 /* BLLogger-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7124EF5BF9BA18D7DA14FD3DBA6AE6C8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469E4517F97077F0AD2FAF35392F5FA7 /* Foundation.framework */; };
 		8219BAEA75C266B1371008C39B8E8EF7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4279CC4F229A91EE3FF0BEFD3FDE1A /* UIKit.framework */; };
-		86702261CCCB76F90248285EE0D5C3B2 /* Backgroundable-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FC188AB0E12E68A4F81B743A449C51 /* Backgroundable-dummy.m */; };
+		8401C94F965B37A58427D4E28F60A7C4 /* ViewControllers+Backgroundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5FF7049ADC17142C5C5C16A7B5CA2F /* ViewControllers+Backgroundable.swift */; };
 		86A4BE67FD19FBD9E9A537E33506ACFD /* Stringer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EE14E9B4566CD709ECD757B8C0417EF /* Stringer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8AD2BA42E189D388A415A0DCF73A8FCC /* Stringer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B578C4458F60A88AFB7961C5064A4A30 /* Stringer-dummy.m */; };
 		8EBF0CA577A92BF1CEB7CD6F21DDB7AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469E4517F97077F0AD2FAF35392F5FA7 /* Foundation.framework */; };
 		A951107CAA8A162EA09A4A794E821623 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469E4517F97077F0AD2FAF35392F5FA7 /* Foundation.framework */; };
 		ABF0FFF1433795E986063D6A4E61BEA1 /* Pods-SwiftFileManager_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 274298BB2017DC6F0429BC43AB478E0F /* Pods-SwiftFileManager_Example-dummy.m */; };
 		B23883F0A229A7D4047F81EA41DC5BA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469E4517F97077F0AD2FAF35392F5FA7 /* Foundation.framework */; };
-		B6A069DBE4D5629F3C411C4F53A90263 /* Backgroundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A96F22C0E7A7821F3EF88DA378EE3 /* Backgroundable.swift */; };
-		BBCCC5BA302D2C0A80C162B194A6E099 /* ViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203364B8A383E66DEE0B80B78D7B2A63 /* ViewControllers.swift */; };
 		BDEE5244421DC125D2329754826058AF /* SwiftFileManager-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 87F4C03F5A4C274118F1E36A7FAB2775 /* SwiftFileManager-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C267769C38550695B9BEA00FB77872E3 /* Pods-SwiftFileManager_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 148CA4441719105CDDEC36D887A65A72 /* Pods-SwiftFileManager_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1978326E1EC30AFF63ED49B2151334D /* BLLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F409941865FA59CCBBE1CFB1A05F9 /* BLLogger.swift */; };
@@ -126,18 +126,18 @@
 		06DCA051FFBD5C2B92A85A0975BD93D8 /* Pods-SwiftFileManager_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftFileManager_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		0AAA4C751DE53CF548F458DDB08F9676 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		0D657284988BC39B3766E1664BA99A81 /* BLLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E48B98888634CEF61D4311235C79097 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EE14E9B4566CD709ECD757B8C0417EF /* Stringer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Stringer-umbrella.h"; sourceTree = "<group>"; };
 		148CA4441719105CDDEC36D887A65A72 /* Pods-SwiftFileManager_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftFileManager_Example-umbrella.h"; sourceTree = "<group>"; };
 		153EA474E8A484EB0F96156C94F0CDA0 /* Backgroundable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Backgroundable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		203364B8A383E66DEE0B80B78D7B2A63 /* ViewControllers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewControllers.swift; path = Pod/Classes/ViewControllers.swift; sourceTree = "<group>"; };
+		172EAEB72924DE907C0612AE55149CF8 /* Backgroundable-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Backgroundable-umbrella.h"; sourceTree = "<group>"; };
+		1F3AE22C45269BB2A4B40B6B46D0A688 /* Backgroundable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Backgroundable.swift; path = Pod/Classes/Backgroundable.swift; sourceTree = "<group>"; };
 		24D29DC1D08737331B5D901AE309D944 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		256B0B3469FFA4354C0509250240CAA3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		258A5F8279F5A6F40CF955E39F5DF9AA /* Pods-SwiftFileManager_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftFileManager_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		266A96F22C0E7A7821F3EF88DA378EE3 /* Backgroundable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Backgroundable.swift; path = Pod/Classes/Backgroundable.swift; sourceTree = "<group>"; };
 		26E962FC5D14E71443D50ECCBD08AC36 /* Pods-SwiftFileManager_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftFileManager_Tests-resources.sh"; sourceTree = "<group>"; };
 		274298BB2017DC6F0429BC43AB478E0F /* Pods-SwiftFileManager_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftFileManager_Example-dummy.m"; sourceTree = "<group>"; };
 		27DBCF5EA0098F63383EE1B56B2AA9B0 /* BLLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D5A6340D212F270EE6DEE7BF066084F /* Backgroundable-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Backgroundable-dummy.m"; sourceTree = "<group>"; };
 		2F3C871CC9FF3EE7A095E9B14FE2866B /* Pods-SwiftFileManager_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SwiftFileManager_Tests.modulemap"; sourceTree = "<group>"; };
 		31F44E3298A1732D650C9777E1628135 /* Pods-SwiftFileManager_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftFileManager_Example.release.xcconfig"; sourceTree = "<group>"; };
 		32075D495731EF531F0624580DFBE45F /* Pods-SwiftFileManager_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftFileManager_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +154,7 @@
 		6263456A314369342E6E2F362ACF9E46 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		62757354298A90C7BEE117516FD297FD /* SwiftFileManager-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftFileManager-prefix.pch"; sourceTree = "<group>"; };
 		631F409941865FA59CCBBE1CFB1A05F9 /* BLLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BLLogger.swift; path = Pod/Classes/BLLogger.swift; sourceTree = "<group>"; };
+		641E095971259AF165BDB79DAC283F78 /* Backgroundable.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Backgroundable.modulemap; sourceTree = "<group>"; };
 		6915E3347751FDDCCC21AE19B0CE2E37 /* Pods-SwiftFileManager_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftFileManager_Example-resources.sh"; sourceTree = "<group>"; };
 		6C6EB55A91F09C0865E8F396023D2590 /* Stringer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stringer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D7BF3CDBA987AFD9E3BEED87C335D6B /* Pods-SwiftFileManager_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftFileManager_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -161,17 +162,16 @@
 		7A3C753AFD53E6360F3F232CB873788C /* Pods-SwiftFileManager_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftFileManager_Example-frameworks.sh"; sourceTree = "<group>"; };
 		86C4475915B1077E5002F7F063212ABD /* BLLogger.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = BLLogger.modulemap; sourceTree = "<group>"; };
 		87F4C03F5A4C274118F1E36A7FAB2775 /* SwiftFileManager-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftFileManager-umbrella.h"; sourceTree = "<group>"; };
+		8BA3510B84D0DDB5B5787B8EC17492C9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96597A9D64F9B7262B46F7BC5638CA26 /* Pods-SwiftFileManager_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftFileManager_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		9928F7A70A45E5E42221CCADD9B66103 /* Backgroundable-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Backgroundable-umbrella.h"; sourceTree = "<group>"; };
+		9C59CAD2A73075103885EA576040E3A8 /* Backgroundable-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Backgroundable-prefix.pch"; sourceTree = "<group>"; };
+		9F5FF7049ADC17142C5C5C16A7B5CA2F /* ViewControllers+Backgroundable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ViewControllers+Backgroundable.swift"; path = "Pod/Classes/ViewControllers+Backgroundable.swift"; sourceTree = "<group>"; };
 		A0C2F56943372949B10D7956BCAB6DD1 /* BLLogger.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BLLogger.xcconfig; sourceTree = "<group>"; };
 		A36B05E918BAB0E6C985B4417606471D /* Pods_SwiftFileManager_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftFileManager_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABAF58318D783AE52AAB4C5ACC3EF9A9 /* Backgroundable.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Backgroundable.modulemap; sourceTree = "<group>"; };
 		AEC03C678A6C724A96B0232D05611938 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B578C4458F60A88AFB7961C5064A4A30 /* Stringer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Stringer-dummy.m"; sourceTree = "<group>"; };
-		B5FC188AB0E12E68A4F81B743A449C51 /* Backgroundable-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Backgroundable-dummy.m"; sourceTree = "<group>"; };
-		B846A8A46DAB02073A113B1D418FDCDC /* Backgroundable.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Backgroundable.xcconfig; sourceTree = "<group>"; };
+		B5FD2DA2256A574153CE3BA96D3B2215 /* Backgroundable.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Backgroundable.xcconfig; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BE76468011D65F3B6A6199324D5FB94B /* Backgroundable-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Backgroundable-prefix.pch"; sourceTree = "<group>"; };
 		BEE95547FE808F7C805DEDB973E4CBDC /* BLLogger-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BLLogger-prefix.pch"; sourceTree = "<group>"; };
 		C9B2868E567A1815FD3A024DD3042A35 /* Stringer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stringer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D412F138CC60CC4EAD5762EDAFC006A2 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -277,6 +277,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2D8D406F330DCBF3EDFEF5C0A27788BB /* Backgroundable */ = {
+			isa = PBXGroup;
+			children = (
+				1F3AE22C45269BB2A4B40B6B46D0A688 /* Backgroundable.swift */,
+				9F5FF7049ADC17142C5C5C16A7B5CA2F /* ViewControllers+Backgroundable.swift */,
+				35A3BBB65718CB1262E2DFB6D6B8411F /* Support Files */,
+			);
+			path = Backgroundable;
+			sourceTree = "<group>";
+		};
+		35A3BBB65718CB1262E2DFB6D6B8411F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				641E095971259AF165BDB79DAC283F78 /* Backgroundable.modulemap */,
+				B5FD2DA2256A574153CE3BA96D3B2215 /* Backgroundable.xcconfig */,
+				2D5A6340D212F270EE6DEE7BF066084F /* Backgroundable-dummy.m */,
+				9C59CAD2A73075103885EA576040E3A8 /* Backgroundable-prefix.pch */,
+				172EAEB72924DE907C0612AE55149CF8 /* Backgroundable-umbrella.h */,
+				8BA3510B84D0DDB5B5787B8EC17492C9 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Backgroundable";
+			sourceTree = "<group>";
+		};
 		38495DD84352BC8927938D797A5B2D16 /* BLLogger */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,7 +344,7 @@
 		5C4C66AB9ED02E0D0A6B9AF85298B3AC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BB7A0997F3A6F3FA9944089896DD9193 /* Backgroundable */,
+				2D8D406F330DCBF3EDFEF5C0A27788BB /* Backgroundable */,
 				38495DD84352BC8927938D797A5B2D16 /* BLLogger */,
 				12A8D48BBC9EE1E12A1DFFD1A17BCF7B /* Stringer */,
 			);
@@ -361,16 +385,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		BB7A0997F3A6F3FA9944089896DD9193 /* Backgroundable */ = {
-			isa = PBXGroup;
-			children = (
-				266A96F22C0E7A7821F3EF88DA378EE3 /* Backgroundable.swift */,
-				203364B8A383E66DEE0B80B78D7B2A63 /* ViewControllers.swift */,
-				D7BD87F398A3631EB21A18859B3A0898 /* Support Files */,
-			);
-			path = Backgroundable;
-			sourceTree = "<group>";
-		};
 		BD4CC7218A1B841160FE506943543C25 /* Pods-SwiftFileManager_Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,20 +423,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Stringer";
-			sourceTree = "<group>";
-		};
-		D7BD87F398A3631EB21A18859B3A0898 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				ABAF58318D783AE52AAB4C5ACC3EF9A9 /* Backgroundable.modulemap */,
-				B846A8A46DAB02073A113B1D418FDCDC /* Backgroundable.xcconfig */,
-				B5FC188AB0E12E68A4F81B743A449C51 /* Backgroundable-dummy.m */,
-				BE76468011D65F3B6A6199324D5FB94B /* Backgroundable-prefix.pch */,
-				9928F7A70A45E5E42221CCADD9B66103 /* Backgroundable-umbrella.h */,
-				0E48B98888634CEF61D4311235C79097 /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/Backgroundable";
 			sourceTree = "<group>";
 		};
 		D98807B5BAE2CEB3D1EB891CA5B86EC1 /* Targets Support Files */ = {
@@ -616,7 +616,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28B99220B654CE3C172CF7B71EE4ADCA /* Build configuration list for PBXNativeTarget "Backgroundable" */;
 			buildPhases = (
-				359E64B7062B3FBE9DAC43E156309945 /* Sources */,
+				C0BAF4B7446E31F27D28DD392DB973D5 /* Sources */,
 				06D26C8F5E1A9FACEA1341B449D17ACF /* Frameworks */,
 				20466B717AD1404313FA7D4460F78C17 /* Headers */,
 			);
@@ -670,16 +670,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		359E64B7062B3FBE9DAC43E156309945 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				86702261CCCB76F90248285EE0D5C3B2 /* Backgroundable-dummy.m in Sources */,
-				B6A069DBE4D5629F3C411C4F53A90263 /* Backgroundable.swift in Sources */,
-				BBCCC5BA302D2C0A80C162B194A6E099 /* ViewControllers.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3FA710C6ACCD5637FDEED1B5F5081EA9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -703,6 +693,16 @@
 			files = (
 				EAA7DD3AA219EBD416B50FE65C537AE4 /* BLLogger-dummy.m in Sources */,
 				D1978326E1EC30AFF63ED49B2151334D /* BLLogger.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0BAF4B7446E31F27D28DD392DB973D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				456DE8B09BA369B356D0249CFDB1B6C7 /* Backgroundable-dummy.m in Sources */,
+				15FEC3FD3EB25D16B4C53AF85B7C15C8 /* Backgroundable.swift in Sources */,
+				8401C94F965B37A58427D4E28F60A7C4 /* ViewControllers+Backgroundable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,7 +883,7 @@
 		};
 		25736E1A91466E65D78A52F0621AB542 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B846A8A46DAB02073A113B1D418FDCDC /* Backgroundable.xcconfig */;
+			baseConfigurationReference = B5FD2DA2256A574153CE3BA96D3B2215 /* Backgroundable.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -911,7 +911,7 @@
 		};
 		2A84214CAFAF3340E4EE26F75440B048 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B846A8A46DAB02073A113B1D418FDCDC /* Backgroundable.xcconfig */;
+			baseConfigurationReference = B5FD2DA2256A574153CE3BA96D3B2215 /* Backgroundable.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
