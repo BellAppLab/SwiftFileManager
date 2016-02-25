@@ -1,7 +1,7 @@
 import Foundation
-//import Backgroundable
-//import BLLogger
-//import Stringer
+import Backgroundable
+import BLLogger
+import Stringer
 
 
 public enum FileType
@@ -92,7 +92,7 @@ public extension NSFileManager
     {
         startBackgroundTask()
         
-        toBackground {
+        inTheBackground {
             if let result = filer.fileType().folder() {
                 func uniqueId() -> String {
                     return "\(NSUUID().UUIDString)\(String.dot)\(filer.fileExtension())"
@@ -106,14 +106,14 @@ public extension NSFileManager
                     tempId = uniqueId()
                 }
                 
-                toMainThread {
+                onTheMainThread {
                     block(url: result.URLByAppendingPathComponent(tempId))
                     endBackgroundTask()
                 }
                 return
             }
             
-            toMainThread {
+            onTheMainThread {
                 block(url: nil)
                 endBackgroundTask()
             }
@@ -137,13 +137,13 @@ public extension NSFileManager
         startBackgroundTask()
         
         func end(url: NSURL?) {
-            toMainThread {
+            onTheMainThread {
                 block(url: url)
                 endBackgroundTask()
             }
         }
         
-        toBackground {
+        inTheBackground {
             let fullFileName = "\(fileName)\(String.dot)\(filer.fileExtension())"
             if let url = filer.fileType().folder()?.URLByAppendingPathComponent(fullFileName) {
                 if shouldExist {
@@ -169,7 +169,7 @@ public extension NSFileManager
         startBackgroundTask()
         
         func end(url: NSURL?) {
-            toMainThread {
+            onTheMainThread {
                 block(url: url)
                 endBackgroundTask()
             }
@@ -197,7 +197,7 @@ public extension NSFileManager
         startBackgroundTask()
         
         func end(url: NSURL?) {
-            toMainThread {
+            onTheMainThread {
                 block(url: url)
                 endBackgroundTask()
             }
@@ -224,7 +224,7 @@ public extension NSFileManager
         
         NSFileManager.makeURL(filer, fileName: fileName) { (url) -> Void in
             if let finalURL = url {
-                toBackground {
+                inTheBackground {
                     proceed(finalURL)
                 }
                 return
@@ -235,7 +235,7 @@ public extension NSFileManager
     
     private static func save(data: NSData, toURL: NSURL, _ block: Block)
     {
-        toBackground {
+        inTheBackground {
             do {
                 try data.writeToURL(toURL, options: .DataWritingAtomic)
                 block(url: toURL)
@@ -251,13 +251,13 @@ public extension NSFileManager
         startBackgroundTask()
         
         func end(url: NSURL?) {
-            toMainThread {
+            onTheMainThread {
                 block(url: url)
                 endBackgroundTask()
             }
         }
         
-        toBackground {
+        inTheBackground {
             if !NSFileManager.defaultManager().fileExistsAtPath(fromURL.path!) {
                 end(nil)
                 return
@@ -270,7 +270,7 @@ public extension NSFileManager
             }
             
             func save(data: NSData) {
-                toBackground {
+                inTheBackground {
                     if let folder = fileType.folder() {
                         NSFileManager.save(data, toURL: folder.URLByAppendingPathComponent(fromURL.lastPathComponent!), { (url) -> Void in
                             if let finalURL = url {
@@ -302,14 +302,14 @@ public extension NSFileManager
         
         func end(url: NSURL?) {
             if let finalBlock = block {
-                toMainThread {
+                onTheMainThread {
                     finalBlock(url: url)
                 }
             }
             endBackgroundTask()
         }
         
-        toBackground {
+        inTheBackground {
             if !fileManager.fileExistsAtPath(atURL.path!) {
                 end(nil)
                 return
@@ -331,7 +331,7 @@ public extension NSFileManager
             self.deleteFile(url, block)
         } else {
             if block != nil {
-                toMainThread {
+                onTheMainThread {
                     block!(url: nil)
                 }
             }

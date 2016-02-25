@@ -57,17 +57,6 @@ public protocol Visibility: AppStatesHandler
     func didChangeVisibility()
 }
 
-public extension Visibility
-{
-    public final func handleAppStateChange(toBackground: Bool) {
-        if (self.visible && toBackground) || (!self.visible && !toBackground) {
-            self.willChangeVisibility()
-            self.visible = !toBackground
-            self.didChangeVisibility()
-        }
-    }
-}
-
 
 //MARK: - Functions
 //MARK: Background Task IDs
@@ -116,7 +105,15 @@ public func endBackgroundTask() {
 //MARK: Dispatching
 
 public struct Background {
-    public static var cleanAfterDone = false
+    public static var cleanAfterDone = false {
+        didSet {
+            if cleanAfterDone {
+                if Background.operationCount == 0 {
+                    Background.concurrentQueue = nil
+                }
+            }
+        }
+    }
     
     private static var concurrentQueue: NSOperationQueue!
     private static var operationCount = 0
@@ -146,7 +143,7 @@ public struct Background {
         let completionBlock = last.completionBlock
         last.completionBlock = { () -> Void in
             if let block = completionBlock {
-                toMainThread(block)
+                onTheMainThread(block)
             }
             
             if Background.concurrentQueue != nil {
@@ -165,12 +162,12 @@ public struct Background {
     }
 }
 
-public func toBackground(x: () -> Void)
+public func inTheBackground(x: () -> Void)
 {
     Background.enqueue([NSBlockOperation(block: x)])
 }
 
-public func toMainThread(x: () -> Void)
+public func onTheMainThread(x: () -> Void)
 {
     dispatch_async(dispatch_get_main_queue()) {
         x()
