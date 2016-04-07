@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '298048C1A59609B5233934BE'
+               BlueprintIdentifier = '891CEA48C172BDF74E335A03'
                BlueprintName = 'SwiftFileManager'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SwiftFileManager.framework'>
