@@ -17,4 +17,5 @@ Pod::Spec.new do |s|
   s.dependency 'Backgroundable'
   s.dependency 'BLLogger'
   s.dependency 'Stringer'
+  s.deprecated = true
 end
